@@ -50,7 +50,7 @@ class Commitments(db.Model):
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     privacy = db.Column(db.String(3))  # PRI-Private, PUB-Public
-    creator_id = db.Column(db.String(10), db.ForeignKey('users.id'))
+    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 @login_manager.user_loader
