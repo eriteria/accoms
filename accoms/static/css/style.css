@@ -1,0 +1,56 @@
+.wrapper .sidebar,
+.sidebar:after,
+body > .navbar-collapse:after {
+	background: #7a87be !important;
+}
+
+.header .nc-icon {
+	font-weight: bold;
+}
+
+.card-body-purple {
+	background: #dccfeb;
+	min-height: 300px;
+}
+
+.card-body-dark {
+	background: #4e517b;
+	min-height: 300px;
+}
+
+.text-dark {
+	color: #4e517b !important;
+}
+
+.bg-dark {
+	background: #4e517b !important;
+	outline: 0;
+	color: white;
+}
+
+.bg-dark:hover{
+	background: white;
+	color: #4e517b ;
+}
+
+.card-hoverable{
+  cursor: pointer;
+  transition: all 0.2s ease-in ;
+}
+
+.card-hoverable:hover{
+  transform: scale(1.05);
+}
+
+.modal-dialog{
+  height: 100%;
+ 
+}
+
+.modal-dialog-centered{
+  vertical-align: middle;
+}
+
+button[type="submit"]{
+  cursor: pointer;
+}
