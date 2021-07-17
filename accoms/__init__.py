@@ -11,7 +11,7 @@ def create_app(config_file="settings.py"):
 
     with app.app_context():
         db.init_app(app)
-        migrate.init_app(app, db)
+        migrate.init_app(app, db, render_as_batch=True)
         login_manager.init_app(app)
 
     app.register_blueprint(site)
