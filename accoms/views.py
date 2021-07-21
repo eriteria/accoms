@@ -33,9 +33,13 @@ def index():
 @login_required
 def dashboard():
     commitments = Commitments.query.filter_by(privacy='public').all()
-    private_commitments = Commitments.query.filter_by(creator=current_user, privacy='private').all()
-    commitments = commitments + private_commitments
-    return render_template("dashboard.html", commitments=commitments)
+    # private_commitments = Commitments.query.filter_by(creator=current_user, privacy='private').all()
+    # commitments = commitments + private_commitments
+    result = []
+    for com in commitments:
+        if com not in current_user.commitments:
+            result.append(com)
+    return render_template("dashboard.html", commitments=result)
 
 
 @login_required
@@ -102,6 +106,7 @@ def add_commitment():
     privacy = request.form['privacy']
     new_commitment = Commitments(name=name, start_date=start, end_date=end, stake=stake,
                                  privacy=privacy, creator=current_user)
+    new_commitment.users.append(current_user)
     db.session.add(new_commitment)
     db.session.commit()
     return redirect(url_for('site.commitment'))
@@ -147,16 +152,16 @@ def honour_commitment(commitment_id):
 
     :param commitment_id:
     """
-    file = request.files['proof']
-    if file.filename == '':
-        flash("Please upload a valid file", "Error")
-        return redirect(url_for("site.commitment"))
-    if file and allowed_file(file.filename):
-        if os.path.exists(UPLOAD_FOLDER + "/" + file.filename):  # if image with same name exists
-            _dot = file.filename.find(".")
-            file.filename = file.filename[:_dot] + str(uuid.uuid4()) + file.filename[_dot:]
-        filename = secure_filename(file.filename)
-        file.save(os.path.normpath(os.path.join(UPLOAD_FOLDER, filename)))
+    # file = request.files['proof']
+    # if file.filename == '':
+    #     flash("Please upload a valid file", "Error")
+    #     return redirect(url_for("site.commitment"))
+    # if file and allowed_file(file.filename):
+    #     if os.path.exists(UPLOAD_FOLDER + "/" + file.filename):  # if image with same name exists
+    #         _dot = file.filename.find(".")
+    #         file.filename = file.filename[:_dot] + str(uuid.uuid4()) + file.filename[_dot:]
+    #     filename = secure_filename(file.filename)
+    #     file.save(os.path.normpath(os.path.join(UPLOAD_FOLDER, filename)))
     commitment = Commitments.query.get(commitment_id)
     if commitment:
         if current_user.is_authenticated:
