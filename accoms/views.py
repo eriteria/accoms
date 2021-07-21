@@ -9,7 +9,7 @@ from datetime import datetime
 
 from werkzeug.utils import secure_filename
 
-from accoms.extensions import login_manager, db
+from accoms.extensions import db
 from accoms.models import Users, Commitments
 from accoms.settings import UPLOAD_FOLDER
 
@@ -39,7 +39,7 @@ def dashboard():
     for com in commitments:
         if com not in current_user.commitments:
             result.append(com)
-    return render_template("dashboard.html", commitments=result)
+    return render_template("dashboard.html", result=result)
 
 
 @login_required
@@ -111,10 +111,9 @@ def add_commitment():
     db.session.commit()
     return redirect(url_for('site.commitment'))
 
-
+# x = {"NAme": "Joseph"}
 @site.route("/joinCommitment", methods=["POST"])
 def join_commitment():
-    json.loads(request.data)
     commitment_id = int(json.loads(request.data)['commitmentId'])
     commitment = Commitments.query.get(commitment_id)
     if commitment:
@@ -129,7 +128,6 @@ def join_commitment():
 
 @site.route("/dishonourCommitment", methods=["POST"])
 def dishonor_commitment():
-    json.loads(request.data)
     commitment_id = int(json.loads(request.data)['commitmentId'])
     commitment = Commitments.query.get(commitment_id)
     if commitment:
@@ -174,7 +172,7 @@ def honour_commitment(commitment_id):
             else:
                 flash("You are not part of this commitment", "error")
                 return redirect(url_for('site.commitment'))
-    else:
-        flash("You are not allowed", "warning")
+        else:
+            flash("You are not allowed", "warning")
         return redirect(url_for('site.commitment'))
     return redirect(url_for('site.commitment'))
