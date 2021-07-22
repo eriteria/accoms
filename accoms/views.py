@@ -70,7 +70,11 @@ def register():
     course = request.form.get('course')
     password = request.form.get('password')
     matric = request.form.get('matricNumberRegister').upper()
-    new_user = Users(name, email, password, course, matric)
+    user_login = Users.query.filter_by(matric=matric).first()
+    if user_login:
+        login_user(user_login)
+    else:  
+        new_user = Users(name, email, password, course, matric)
     db.session.add(new_user)
     db.session.commit()
     if login_user(new_user):
