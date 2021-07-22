@@ -73,15 +73,16 @@ def register():
     user_login = Users.query.filter_by(matric=matric).first()
     if user_login:
         login_user(user_login)
+        return redirect(url_for('site.dashboard'))
     else:  
         new_user = Users(name, email, password, course, matric)
-    db.session.add(new_user)
-    db.session.commit()
-    if login_user(new_user):
-        flash("Logged in!")
-        return redirect(url_for('site.dashboard'))
-    else:
-        flash("unable to log you in", 'danger')
+        db.session.add(new_user)
+        db.session.commit()
+        if login_user(new_user):
+            flash("Logged in!")
+            return redirect(url_for('site.dashboard'))
+        else:
+            flash("unable to log you in", 'danger')
     return redirect(url_for('site.user'))
 
 
