@@ -1,2 +1,2 @@
 # accoms
-Final Year project for Motun
+Final Year project for a student of Covenant University
