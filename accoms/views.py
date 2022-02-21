@@ -1,17 +1,12 @@
 import json
-import os
-import uuid
 
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash
 from datetime import datetime
 
-from werkzeug.utils import secure_filename
-
 from accoms.extensions import db
 from accoms.models import Users, Commitments
-from accoms.settings import UPLOAD_FOLDER
 
 site = Blueprint("site", __name__, url_prefix="/")
 

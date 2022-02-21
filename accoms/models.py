@@ -1,6 +1,5 @@
-from flask import flash, redirect, url_for
-from flask_login import UserMixin, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
 from accoms.extensions import db, login_manager
 
 # users_commitments = db.Table('users_commitments', db.Column('user_id', db.ForeignKey('users.id')),
