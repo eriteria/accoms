@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint
+from flask import Flask
 
 from accoms.views import site
 from accoms.extensions import db, migrate, login_manager
